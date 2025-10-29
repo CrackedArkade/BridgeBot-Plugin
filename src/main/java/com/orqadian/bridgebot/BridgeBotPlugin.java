@@ -14,39 +14,42 @@ import java.util.List;
 
 public class BridgeBotPlugin extends JavaPlugin {
 
-
     private final HttpClient httpClient = HttpClient.newHttpClient();
     private final Gson gson = new Gson();
+    
+    // --- FIX: Add a private field for the API URL ---
+    // This variable belongs to the whole class now.
+    private String apiUrl;
 
     @Override
     public void onEnable() {
-
         saveDefaultConfig();
-        String apiUrl = getConfig().getString("api-url");
+        
+        // --- FIX: Assign the value to the class field, not a local variable ---
+        this.apiUrl = getConfig().getString("api-url");
 
-        if (apiUrl == null || apiUrl.contains("localhost")) {
-            getLogger().warning("API URL is set to a default value. This is fine for local testing!");
+        // Now we check the class field.
+        if (this.apiUrl == null || this.apiUrl.isEmpty()) {
+            getLogger().severe("API URL is not set in config.yml! The plugin will not work.");
+            return; // Stop the plugin from enabling.
         }
 
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
 
-
         getServer().getScheduler().runTaskTimerAsynchronously(this, () -> {
             try {
-
+                // This now correctly uses the 'apiUrl' field from the class.
                 HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create(apiUrl))
+                        .uri(URI.create(this.apiUrl))
                         .GET()
                         .build();
 
                 HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-
                 Type listType = new TypeToken<List<String>>(){}.getType();
                 List<String> messages = gson.fromJson(response.body(), listType);
 
                 if (messages != null && !messages.isEmpty()) {
-
                     getServer().getScheduler().runTask(this, () -> {
                         for (String message : messages) {
                             Bukkit.broadcastMessage(message);
@@ -54,7 +57,6 @@ public class BridgeBotPlugin extends JavaPlugin {
                     });
                 }
             } catch (Exception e) {
-
                 getLogger().warning("Failed to fetch messages from Discord bridge: " + e.getMessage());
             }
         }, 0L, 60L); 
@@ -64,7 +66,6 @@ public class BridgeBotPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
         getServer().getScheduler().cancelTasks(this);
         getLogger().info("BridgeBot Plugin has been disabled.");
     }
