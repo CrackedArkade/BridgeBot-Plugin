@@ -17,10 +17,10 @@ public class ChatListener implements Listener {
     private final Gson gson = new Gson();
     private final String apiUrl;
 
-    // The constructor for this class
+
     public ChatListener(BridgeBotPlugin plugin) {
         this.plugin = plugin;
-        // Get the API URL from the plugin's config.yml
+
         this.apiUrl = plugin.getConfig().getString("api-url");
     }
 
