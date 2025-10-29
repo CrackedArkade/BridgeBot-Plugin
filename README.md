@@ -1,0 +1,1 @@
+As of now, the plugin requires the server be hosted manually (either on a device of your own or a virtual machine of which you have full control of). Paper-Based plugin so please utilize accordingly! all you have to do is upload the BridgeBot 1.X.X.jar file into your server's plugin folder. No extra fuss, no other steps needed.
