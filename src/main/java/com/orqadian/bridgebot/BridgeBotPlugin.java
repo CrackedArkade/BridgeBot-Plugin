@@ -17,28 +17,29 @@ public class BridgeBotPlugin extends JavaPlugin {
     private final HttpClient httpClient = HttpClient.newHttpClient();
     private final Gson gson = new Gson();
     
-    // --- FIX: Add a private field for the API URL ---
-    // This variable belongs to the whole class now.
+    // This field will hold our API URL.
     private String apiUrl;
 
     @Override
     public void onEnable() {
+        // First, save and load the configuration.
         saveDefaultConfig();
         
-        // --- FIX: Assign the value to the class field, not a local variable ---
+        // Assign the URL to our class-level field.
         this.apiUrl = getConfig().getString("api-url");
 
-        // Now we check the class field.
         if (this.apiUrl == null || this.apiUrl.isEmpty()) {
-            getLogger().severe("API URL is not set in config.yml! The plugin will not work.");
-            return; // Stop the plugin from enabling.
+            getLogger().severe("API URL IS MISSING in config.yml! The plugin will not work.");
+            return; 
         }
 
+        // Now that the configuration is loaded, register our listener.
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
 
+        // Schedule the polling task.
         getServer().getScheduler().runTaskTimerAsynchronously(this, () -> {
             try {
-                // This now correctly uses the 'apiUrl' field from the class.
+                // This request will now correctly use the apiUrl field from this class.
                 HttpRequest request = HttpRequest.newBuilder()
                         .uri(URI.create(this.apiUrl))
                         .GET()
@@ -57,11 +58,12 @@ public class BridgeBotPlugin extends JavaPlugin {
                     });
                 }
             } catch (Exception e) {
-                getLogger().warning("Failed to fetch messages from Discord bridge: " + e.getMessage());
+                // Let's add more detail to our error message to be sure.
+                getLogger().warning("Failed to fetch messages. Error: " + e.getClass().getSimpleName() + " - " + e.getMessage());
             }
         }, 0L, 60L); 
 
-        getLogger().info("BridgeBot Plugin has been enabled and is fully operational!");
+        getLogger().info("BridgeBot Plugin is fully enabled!");
     }
 
     @Override

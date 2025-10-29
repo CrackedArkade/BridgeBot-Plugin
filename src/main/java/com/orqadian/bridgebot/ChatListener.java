@@ -15,13 +15,9 @@ public class ChatListener implements Listener {
     private final BridgeBotPlugin plugin;
     private final HttpClient httpClient = HttpClient.newHttpClient();
     private final Gson gson = new Gson();
-    private final String apiUrl;
-
 
     public ChatListener(BridgeBotPlugin plugin) {
         this.plugin = plugin;
-
-        this.apiUrl = plugin.getConfig().getString("api-url");
     }
 
     @EventHandler
@@ -33,6 +29,9 @@ public class ChatListener implements Listener {
         String jsonPayload = gson.toJson(payload);
 
         try {
+            // Get the apiUrl directly from the main plugin class's config
+            String apiUrl = plugin.getConfig().getString("api-url");
+
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(apiUrl))
                     .header("Content-Type", "application/json")
@@ -45,7 +44,6 @@ public class ChatListener implements Listener {
             plugin.getLogger().warning("Failed to send message to Discord bridge: " + e.getMessage());
         }
     }
-
 
     private static class MinecraftMessage {
         String playerName;
