@@ -46,7 +46,7 @@ public class ChatListener implements Listener {
         }
     }
 
-    // A helper class to structure our JSON payload
+
     private static class MinecraftMessage {
         String playerName;
         String content;
