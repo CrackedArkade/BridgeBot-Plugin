@@ -6,7 +6,7 @@ public class BridgeBotPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-    
+
         saveDefaultConfig();
 
         getLogger().info("BridgeBotPlugin has been enabled and config is loaded!");
