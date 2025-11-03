@@ -29,7 +29,6 @@ public class ChatListener implements Listener {
         String jsonPayload = gson.toJson(payload);
 
         try {
-            // Get the apiUrl directly from the main plugin class's config
             String apiUrl = plugin.getConfig().getString("api-url");
 
             HttpRequest request = HttpRequest.newBuilder()

@@ -57,7 +57,7 @@ public class BridgeBotPlugin extends JavaPlugin {
             } catch (Exception e) {
                 getLogger().warning("Failed to fetch messages. Error: " + e.getClass().getSimpleName() + " - " + e.getMessage());
             }
-        }, 0L, 60L); 
+        }, 0L, 10L); 
 
         getLogger().info("BridgeBot Plugin is fully enabled!");
     }
