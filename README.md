@@ -5,6 +5,7 @@ Only requirement to use plugin is upload  BridgeBot 1.X.X.jar file into your ser
 Discord Commands: /playsound player: _____ sound: ______, 
                   /playeserversound sound: ______
 
+Minecraft Commands:  /gawr <target|@a> <sound>
 
 Run server through command 
 java -Xms2G -Xmx2G -jar server.jar --nogui
