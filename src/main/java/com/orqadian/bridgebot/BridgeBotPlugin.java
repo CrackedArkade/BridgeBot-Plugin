@@ -59,6 +59,8 @@ public class BridgeBotPlugin extends JavaPlugin {
             }
         }, 0L, 10L); 
 
+        getCommand("gawr").setExecutor(new SoundPlayCommand());
+        getCommand("gawr").setTabCompleter(new CommandTabCompleter());
         getLogger().info("BridgeBot Plugin is fully enabled!");
     }
 

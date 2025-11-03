@@ -4,3 +4,9 @@ main: com.orqadian.bridgebot.BridgeBotPlugin
 api-version: '1.21'
 author: Orqadian
 description: A custom plugin to bridge chat to a .NET Discord bot.
+commands:
+  gawr:
+    description: Plays a sound for a player from their relative position.
+    usage: "/gawr <target|@a> <sound>"
+    permission: bridgebot.gawr
+    permission-message: "You do not have permission to use this command."
