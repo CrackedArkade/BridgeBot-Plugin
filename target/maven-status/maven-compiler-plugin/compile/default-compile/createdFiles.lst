@@ -1,4 +1,6 @@
 com\orqadian\bridgebot\ChatListener.class
-com\orqadian\bridgebot\BridgeBotPlugin$1.class
 com\orqadian\bridgebot\ChatListener$MinecraftMessage.class
 com\orqadian\bridgebot\BridgeBotPlugin.class
+com\orqadian\bridgebot\CommandTabCompleter.class
+com\orqadian\bridgebot\BridgeBotPlugin$1.class
+com\orqadian\bridgebot\SoundPlayCommand.class
