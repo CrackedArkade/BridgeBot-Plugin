@@ -17,15 +17,14 @@ public class BridgeBotPlugin extends JavaPlugin {
     private final HttpClient httpClient = HttpClient.newHttpClient();
     private final Gson gson = new Gson();
     
-    // This field will hold our API URL.
     private String apiUrl;
 
     @Override
     public void onEnable() {
-        // First, save and load the configuration.
+
         saveDefaultConfig();
         
-        // Assign the URL to our class-level field.
+    
         this.apiUrl = getConfig().getString("api-url");
 
         if (this.apiUrl == null || this.apiUrl.isEmpty()) {
@@ -33,13 +32,11 @@ public class BridgeBotPlugin extends JavaPlugin {
             return; 
         }
 
-        // Now that the configuration is loaded, register our listener.
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
 
-        // Schedule the polling task.
+
         getServer().getScheduler().runTaskTimerAsynchronously(this, () -> {
             try {
-                // This request will now correctly use the apiUrl field from this class.
                 HttpRequest request = HttpRequest.newBuilder()
                         .uri(URI.create(this.apiUrl))
                         .GET()
@@ -58,7 +55,6 @@ public class BridgeBotPlugin extends JavaPlugin {
                     });
                 }
             } catch (Exception e) {
-                // Let's add more detail to our error message to be sure.
                 getLogger().warning("Failed to fetch messages. Error: " + e.getClass().getSimpleName() + " - " + e.getMessage());
             }
         }, 0L, 60L); 
